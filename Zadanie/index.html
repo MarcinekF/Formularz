@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Formularz przewozu towarów</title>
+    <style>
+        .cargo {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Formularz przewozu towarów</h2>
+    <form method="post" action="send_email.php" enctype="multipart/form-data">
+        <div class="cargo">
+            <label>Nazwa ³adunku:</label>
+            <input type="text" name="cargo_name[]" required>
+        </div>
+        <div class="cargo">
+            <label>Ciê¿ar ³adunku (kg):</label>
+            <input type="number" name="cargo_weight[]" required>
+        </div>
+        <div class="cargo">
+            <label>Typ ³adunku:</label>
+            <select name="cargo_type[]" required>
+                <option value="ladunek zwykly">ladunek zwykly</option>
+                <option value="ladunek niebezpieczny">ladunek niebezpieczny</option>
+            </select>
+        </div>
+        <div id="cargo-container"></div>
+        <button type="button" onclick="addCargo()">Dodaj kolejny ladunek</button>
+
+        <hr>
+
+        <label>Transport z:</label>
+        <input type="text" name="transport_from" required>
+
+        <label>Transport do:</label>
+        <input type="text" name="transport_to" required>
+
+        <label>Typ samolotu:</label>
+        <select name="airplane_type" required>
+            <option value="Airbus A380">Airbus A380</option>
+            <option value="Boeing 747">Boeing 747</option>
+        </select>
+
+        <label>Dokumenty przewozowe:</label>
+        <input type="file" name="transport_documents[]" accept=".jpg, .png, .doc, .docx, .pdf" multiple>
+
+        <label>Data transportu:</label>
+        <input type="date" name="transport_date" required>
+
+        <br><br>
+
+        <input type="submit" value="Wyœlij">
+    </form>
+
+    <script>
+        var cargoCounter = 1;
+
+        function addCargo() {
+            var cargoContainer = document.getElementById("cargo-container");
+
+            var cargoDiv = document.createElement("div");
+            cargoDiv.className = "cargo";
+
+            var nameLabel = document.createElement("label");
+            nameLabel.textContent = "Nazwa ³adunku:";
+            var nameInput = document.createElement("input");
+            nameInput.type = "text";
+            nameInput.name = "cargo_name[]";
+            nameInput.required = true;
+
+            var weightLabel = document.createElement("label");
+            weightLabel.textContent = "Ciê¿ar ³adunku (kg):";
+            var weightInput = document.createElement("input");
+            weightInput.type = "number";
+            weightInput.name = "cargo_weight[]";
+            weightInput.required = true;
+
+            var typeLabel = document.createElement("label");
+            typeLabel.textContent = "Typ ³adunku:";
+            var typeSelect = document.createElement("select");
+            typeSelect.name = "cargo_type[]";
+            typeSelect.required = true;
+            var option1 = document.createElement("option");
+            option1.value = "ladunek zwykly";
+            option1.textContent = "ladunek zwykly";
+            var option2 = document.createElement("option");
+            option2.value = "ladunek niebezpieczny";
+            option2.textContent = "ladunek niebezpieczny";
+            typeSelect.appendChild(option1);
+            typeSelect.appendChild(option2);
+
+            cargoDiv.appendChild(nameLabel);
+            cargoDiv.appendChild(nameInput);
+            cargoDiv.appendChild(weightLabel);
+            cargoDiv.appendChild(weightInput);
+            cargoDiv.appendChild(typeLabel);
+            cargoDiv.appendChild(typeSelect);
+
+            cargoContainer.appendChild(cargoDiv);
+
+            cargoCounter++;
+        }
+    </script>
+</body>
+</html>
